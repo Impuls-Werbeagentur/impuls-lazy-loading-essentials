@@ -118,7 +118,7 @@ function impuls_lle_get_fallback_bg_tags($url="",$size="thumbnail",$classes="",$
 function impuls_lle_get_fallback_image_id(){
 	$fallback_id = 0;
 	if(function_exists('impuls_framework_get_options_page_options')){
-		$all_options = get_option(impuls_get_custom_theme_options_prefix(),array());
+		$all_options = get_option(impuls_get_custom_theme_options_name(),array());
 		if(is_array($all_options) && isset($all_options['impuls_lle_fallback_image_id'])){
 			$fallback_id = (int)$all_options['impuls_lle_fallback_image_id'];
 		}
