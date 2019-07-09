@@ -17,7 +17,7 @@ function impuls_lle_initialize_options(){
 	}
 }
 
-add_action('after_setup_theme','impuls_lle_initialize_options');
+add_action('admin_init','impuls_lle_initialize_options');
 
 function impuls_lle_add_setting_to_impuls_framework($options_array){
 	if(!$options_array){
