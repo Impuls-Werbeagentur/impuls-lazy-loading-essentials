@@ -12,12 +12,13 @@ function impuls_lle_initialize_options(){
 	if(function_exists('impuls_framework_get_options_page_options')){
 		add_filter('impuls_framework_options_page_options','impuls_lle_add_setting_to_impuls_framework');
 	} else {
-		impuls_lle_register_settings();
+		add_action('admin_init','impuls_lle_register_settings');
+		add_action( 'admin_enqueue_script', 'impuls_lle_include_admin_script' );
 		add_action( 'admin_menu', 'impuls_lle_register_options_page');
 	}
 }
 
-add_action('admin_init','impuls_lle_initialize_options');
+add_action('after_setup_theme','impuls_lle_initialize_options');
 
 function impuls_lle_add_setting_to_impuls_framework($options_array){
 	if(!$options_array){
@@ -53,8 +54,6 @@ function impuls_lle_register_options_page(){
 
 
 function impuls_lle_options_render_options_page(){
-	wp_enqueue_media();
-	wp_enqueue_script('impuls-lle-admin-script',plugins_url('js/impuls-lle-admin-page.js',__FILE__),array('jquery'),filemtime(plugin_dir_path(__FILE__).'/js/impuls-lle-admin-page.js'),true);
 	?>
         <div class="wrap"> 
             <h2>Impuls Lazy Loading Essentials</h2>
@@ -69,6 +68,11 @@ function impuls_lle_options_render_options_page(){
             </form>
         </div>
     <?php
+}
+
+function impuls_lle_include_admin_script(){
+	wp_enqueue_media();	
+	wp_enqueue_script('impuls-lle-admin-script',plugins_url('/js/impuls-lle-admin-page.js',__FILE__),array('jquery'),filemtime(plugin_dir_path(__FILE__).'/js/impuls-lle-admin-page.js'),true);
 }
 
 function impuls_lle_options_group_header_text() {
@@ -159,7 +163,6 @@ function impuls_lle_make_images_go_lazy_thumbnail_html($html="", $post_id,$post_
 add_action('wp_enqueue_scripts','impuls_lle_enqueue_lazy_loading_scripts');
 
 function impuls_lle_enqueue_lazy_loading_scripts(){
-	//'impuls-lle-admin-script',plugins_url('js/impuls-lle-admin-page.js',__FILE__),array('jquery'),filemtime(plugin_dir_path(__FILE__).'/js/impuls-lle-admin-page.js'),true
 	wp_enqueue_script('intersection-observer-polyfill',plugins_url('js/intersection-observer.min.js',__FILE__),array(),filemtime(plugin_dir_path(__FILE__).'/js/intersection-observer.min.js'),true);
 	wp_enqueue_script('impuls-lle-lazy-loader-script',plugins_url('js/impuls-lle-lazy-loader.js',__FILE__),array(),filemtime(plugin_dir_path(__FILE__).'/js/impuls-lle-lazy-loader.js'),true);
 }
