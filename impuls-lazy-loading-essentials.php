@@ -2,7 +2,7 @@
 /*
 Plugin Name: Impuls Lazy Loading Essentials
 Description: Kernfunktionen für Lazy Loading für Impuls Themes und Gutenberg Blocks
-Version: 1.1
+Version: 1.2
 Author: Impuls Werbeagentur
 Author URI: https://www.werbeagentur-impuls.de
 */
@@ -158,6 +158,10 @@ function impuls_lle_make_images_go_lazy_thumbnail_html($html="", $post_id,$post_
 		$platzhalter_src = wp_get_attachment_image_src($platzhalter,$size)[0];
 	}
 	return str_replace(array('class="','src="'),array('class="impuls-lle-lazy ','src="'.$platzhalter_src.'" data-lazysrc="'),$html);
+}
+
+function impuls_lle_get_lazy_gmaps_integration($apikey,$callback,$libraries = ""){
+	return '<div class="impuls-lle-lazy-gmap" data-lazygmapsapikey="'.$apikey.'" data-lazygmapscallback="'.$callback.'" data-lazygmapslibraries="'.$libraries.'"></div>';
 }
 
 add_action('wp_enqueue_scripts','impuls_lle_enqueue_lazy_loading_scripts');
