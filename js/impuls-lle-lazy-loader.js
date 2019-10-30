@@ -1,3 +1,4 @@
+var gmapsloaded = false;
 let lazyObjectObserver = new IntersectionObserver(function(entries, observer) {
 		entries.forEach(function(entry) {
 			if (entry.isIntersecting) {
@@ -33,9 +34,19 @@ let lazyGMapsObserver = new IntersectionObserver(function(entries, observer) {
 			let lazyGMapContainer = entry.target;
 			apikey = lazyGMapContainer.dataset.lazygmapsapikey;
 			callback = lazyGMapContainer.dataset.lazygmapscallback;
-			var script = document.createElement('script');
-			script.setAttribute('src', 'https://maps.googleapis.com/maps/api/js?key='+apikey+'&callback='+callback);
-			document.head.appendChild(script);
+			libraries = lazyGMapContainer.dataset.lazygmapslibraries;
+			scriptsrc = 'https://maps.googleapis.com/maps/api/js?key='+apikey+'&callback='+callback;
+			if(libraries){
+				scriptsrc+='&libraries='+libraries;
+			}
+			if(!gmapsloaded){
+				var script = document.createElement('script');
+				script.setAttribute('src', scriptsrc);
+				document.head.appendChild(script);
+				gmapsloaded = true;
+			} else {
+				window[callback]();
+			}
 			lazyGMapsObserver.unobserve(lazyGMapContainer);
 		}
 	});
