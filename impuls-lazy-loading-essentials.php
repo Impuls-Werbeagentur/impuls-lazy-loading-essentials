@@ -13,7 +13,7 @@ function impuls_lle_initialize_options(){
 		add_filter('impuls_framework_options_page_options','impuls_lle_add_setting_to_impuls_framework');
 	} else {
 		add_action('admin_init','impuls_lle_register_settings');
-		add_action( 'admin_enqueue_script', 'impuls_lle_include_admin_script' );
+		add_action( 'admin_enqueue_scripts', 'impuls_lle_include_admin_script' );
 		add_action( 'admin_menu', 'impuls_lle_register_options_page');
 	}
 }
